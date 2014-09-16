@@ -1,0 +1,107 @@
+//  Upper half of this matrix gives correspondences that are available 
+// between different images -- 1 means that correspondences exist
+// This matrix is square with r/c equal to the number of images
+4 4
+0.0 1.0 1.0 1.0
+0.0 0.0 0.0 0.0
+0.0 0.0 0.0 0.0
+0.0 0.0 0.0 0.0
+// For the number of images specified above 0..N-1, each one 
+// has a file name, given by a string
+w0.png
+w1.png
+w2c.png
+w3c.png
+//  For each 1 entry in the correpondence matrix there is 
+// control point, and it corresponds the the same point in the
+// sister matrix
+//
+// This matrix is the set of points from image 3 that have corresponding 
+// points in image 0
+3 0 
+// 6 correspondences with 2 coordinates each (it's a matrix)
+6 2
+264 105  
+369  84 
+257 252  
+367 239  
+152 141
+146 242
+// This matrix is the set of points from image 0 that have corresponding 
+// points in image 3, it has a sister matrix given above (must be same size)
+0 3 
+6 2
+134  10
+231   8  
+132 128 
+231 127
+12  20
+11 110
+// 0 to 1 correspondences
+0 1 
+13 2
+434   6
+451 136
+540 125
+550  21
+542 222
+563 270
+454 216
+355 244
+402 295
+535 216
+563 267
+565 282
+566 306
+// 1 to zero correspondences
+1 0
+13 2
+81  72 
+106 227
+210 203
+218  69
+212 328
+243 383
+110 325
+9 360
+63 418
+203 322
+243 383
+246 399
+248 429
+// 0 to 2 correspondences
+0 2 
+12 2
+256 164
+313 165
+256 196
+313 192
+145 246
+218 246
+145 342
+218 342
+30 221
+16 362
+3 249
+2 340
+// 2 to 0 correspondences
+2 0
+12 2
+428 107
+489 109
+425 142
+488 141
+302 195
+382 197
+296 299
+376 300
+174 163
+155 317
+140 192
+139 293
+// this gives the image domain into which the others should be mapped.
+// I.e. the mosaic is from this point of view.
+1
+// This is the file name for the output.  Could be anything indicated 
+// by this string
+mosaic_out.tif

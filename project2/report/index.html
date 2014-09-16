@@ -1,0 +1,186 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+
+<HTML>
+<HEAD>
+<TITLE> PRATEEP'S ART GALLERY </TITLE>
+</HEAD>
+
+<BODY >
+
+<center> <h2> HOMEWORK 2 <br>
+			  PRATEEP MUKHERJEE <br> 
+			  prateepm@sci.utah.edu </h2> </center>
+
+
+<h2> HISTOGRAM EQUALIZATION </h2>
+
+<br> In the first experiment, we show histogram equalization for three different sets of images. 
+In each row below, we show the original image, histogram of the original image, histogram equalized image, and the 
+histogram transformation respectively.
+
+<br> <br> 
+
+<img src="../crowd/crowd.png" height="170" alt="" />
+<img src="../crowd/crowd_orHist.png" height="170" alt="" />
+<img src="../crowd/crowd_1.00.png" height="170" alt="" />
+<img src="../crowd/crowd_eqHist.png" height="170" alt="" />
+<img src="../crowd/crowd_eqT_256.png" height="170" alt="" />
+
+<br> <br>
+
+<img src="../university/university_0.00.png" height="170" alt="" />
+<img src="../university/university_orHist.png" height="170" alt="" />
+<img src="../university/university_1.00.png" height="170" alt="" />
+<img src="../university/university_eqHist.png" height="170" alt="" />
+<img src="../university/university_eqT_256.png" height="170" alt="" />
+
+<br> <br>
+
+<img src="../lunch/lunch.jpg" height="165" width="230" alt="" />
+<img src="../lunch/lunch_orHist.png" height="165" alt="" />
+<img src="../lunch/lunch_eq.png" height="165" width="230" alt="" />
+<img src="../lunch/lunch_eqHist.png" height="165" alt="" />
+<img src="../lunch/lunch_eqT_256.png" height="165" alt="" />
+
+<br> <br>
+
+<img src="../portal/portal_0.00.png" height="200" alt="" />
+<img src="../portal/portal_orHist.png" height="200" alt="" />
+<img src="../portal/portal_eq.png" height="200" alt="" />
+<img src="../portal/portal_eqHist.png" height="200" alt="" />
+<img src="../portal/portal_eqT_256.png" height="200" alt="" />
+
+<br> Histogram equalization is shown for different sets of images. Here, we use the formula 
+<br>
+<center> H<sub>f</sub> = alpha * H<sub>eq</sub> + (1-alpha) * H<sub>i </sub>,  </center> 
+<br>
+where H<sub>i</sub> is the identity transform and H<sub>eq</sub> is the transformation for histogram equalization. 
+From left to right, each row shows the original image, images with alpha = 0.4, 0.8 and 1.00 respectively. 
+Note that the rightmost image in each row is the original histogram equalized image.
+
+<br> Crowd <br>
+
+<img src="../crowd/crowd.png" height="200" alt="" />
+<img src="../crowd/crowd_0.40.png" height="200" alt="" />
+<img src="../crowd/crowd_0.80.png" height="200" alt="" />
+<img src="../crowd/crowd_1.00.png" height="200" alt="" />
+
+<br> University <br>
+
+<img src="../university/university.png" height="200" alt="" />
+<img src="../university/university_0.40.png" height="200" alt="" />
+<img src="../university/university_0.80.png" height="200" alt="" />
+<img src="../university/university_1.00.png" height="200" alt="" />
+
+<br> Ross <br>
+
+<img src="../ross/ross.png" height="200" alt="" />
+<img src="../ross/transform_0.40.png" height="200" alt="" />
+<img src="../ross/transform_0.80.png" height="200" alt="" />
+<img src="../ross/transform_1.00.png" height="200" alt="" />
+
+<br> Lunch <br>
+
+<img src="../lunch/lunch.jpg" height="165" alt="" />
+<img src="../lunch/lunch_0.40.jpg" height="165" alt="" />
+<img src="../lunch/lunch_0.80.jpg" height="165" alt="" />
+<img src="../lunch/lunch_1.00.jpg" height="165" alt="" />
+
+<br>
+<br>
+
+
+<h2> ADAPTIVE HISTOGRAM EQUALIZATION </h2>
+
+Adaptive Histogram Equalization was implemented in 3 ways. In the first case, the Sliding Window algorithm was
+implemented. In the second case, we used the same algorithm. However, now we normalize the histogram values 
+within each window. In the third case, we implemented the Tiling approach. In each row below, we show 4 sets of 
+images. From left to right, they show the histogram equalization using 1st approach, 2nd approach with a 8x8 window,
+3rd approach using 8x8 tiles and 256 bins, 3rd approach using 8x8 tiles using bilinear interpolation and 100 bins, and finally the 3rd approach
+using a 20x20 tiles. In the interpolation approach, we compute the histogram equalizations of Upper Left(UL), Upper Right(UR), Down Left(DL) and Down Right(DR). 
+Next, we compute the bilateral interpolation of these values to compute the current histogram value.
+
+<br> 
+<br>  In these examples, as we grow the window size the local grayscale distribution gets better.
+However, when the window size gets bigger we get shadow artifacts as seen in the rightmost figures. 
+
+<br> 
+<br> The average execution time for the 1st variant on these images is ~ 2 secs. For the 2nd variant, the average
+execution time is ~ 3.2 secs. For the 3rd variant, the execution times were stretched to ~ 5-10 secs.
+
+<br> It can be seen in all the images, that as we use more variants of adaptive histogram equalization, the results
+get better. However, this improvement in quality comes at the cost of increased execution time. 
+
+<br> <b> Crowd: </b> <br>
+
+<img src="../crowd/crowd_eqAdapt1.png" height="170" alt="" />
+<img src="../crowd/crowd_eqAdapt2_8x8.png" height="170" alt="" />
+<img src="../crowd/crowd_eqAdapt3_8x8.png" height="170" alt="" />
+<img src="../crowd/crowd_eqAdapt3_8x8_100bins.png" height="170" alt="" />
+<img src="../crowd/crowd_eqAdapt3_20x20.png" height="170" alt="" />
+
+<br> <b> University: </b>  <br>
+
+<img src="../university/university_eqAdapt1.png" height="170" alt="" />
+<img src="../university/university_eqAdapt2_8x8.png" height="170" alt="" />
+<img src="../university/university_eqAdapt3_8x8.png" height="170" alt="" />
+<img src="../university/university_eqAdapt3_8x8_100bins.png" height="170" alt="" />
+<img src="../university/university_eqAdapt3_17x17.png" height="170" alt="" />
+
+<br> <b> Portal: </b> <br>
+
+<img src="../portal/portal_eqAdapt1.png" height="220" width="228" alt="" />
+<img src="../portal/portal_eqAdapt2_8x8.png" height="220" width="228" alt="" />
+<img src="../portal/portal_eqAdapt3_8x8.png" height="220" width="228" alt="" />
+<img src="../portal/portal_eqAdapt3_8x8_100bins.png" height="220" width="228" alt="" />
+<img src="../portal/portal_eqAdapt3_15x15.png" height="220" width="228" alt="" />
+
+<br> <b> Ross: </b> <br> 
+
+<img src="../ross/transform_eqAdapt1.png" height="180" alt="" />
+<img src="../ross/transform_eqAdapt2_8x8.png" height="180" alt="" />
+<img src="../ross/transform_eqAdapt3_8x8.png" height="180" alt="" />
+<img src="../ross/transform_eqAdapt3_8x8.png" height="180" alt="" />
+<img src="../ross/transform_eqAdapt3_22x22.png" height="180" alt="" />
+
+
+<h2> CLAHE </h2>
+
+<br> The clipping value used is by default mean of the maximum histogram value. In this algorithm, we also implement
+bilinear interpolation to interpolate the current window with the histogram of neighbour 3 windows. 
+<br> 
+<br> As in AHE, we compute the histogram equalization using tiling method for Upper Left(UL), Upper Right(UR), Down Left(DL) and Down Right(DR). 
+Next, we compute the bilateral interpolation of these values to compute the current histogram value. 
+A drawback in this approach is that within the same window the pixels towards the left border are computed differently than pixels on the right border.
+
+<br> <b> Crowd </b> <br>
+
+<img src="../crowd/crowd.png" height="180" alt="">
+<img src="../crowd/crowd_orHist.png" height="180" alt="">
+<img src="../crowd/crowd_clahe.png" height="180" alt="">
+<img src="../crowd/crowd_clHist.png" height="180" alt="">
+
+<br> <b> University </b> <br>
+
+<img src="../university/university.png" height="180" alt="">
+<img src="../university/university_orHist.png" height="180" alt="">
+<img src="../university/university_clahe1.png" height="180" alt="">
+<img src="../university/university_clHist.png" height="180" alt="">
+
+<br> <b> Portal </b> <br>
+
+<img src="../portal/portal.png" height="180" alt="">
+<img src="../portal/portal_orHist.png" height="180" alt="">
+<img src="../portal/portal_clahe.png" height="180" alt="">
+<img src="../portal/portal_clHist.png" height="180" alt="">
+
+<br> <b> Lunch </b> <br>
+
+<img src="../lunch/lunch.jpg" height="180" width="230" alt="">
+<img src="../lunch/lunch_orHist.png" height="180" alt="">
+<img src="../lunch/lunch_clahe1.png" height="180" alt="">
+<img src="../lunch/lunch_clHist.png" height="180" alt="">
+
+
+</BODY>
+</HTML>

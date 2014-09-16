@@ -1,0 +1,41 @@
+//  Upper half of this matrix gives correspondences that are available 
+// between different images -- 1 means that correspondences exist
+// This matrix is square with r/c equal to the number of images
+2 2
+0.0 1.0
+0.0 0.0
+// For the number of images specified above 0..N-1, each one 
+// has a file name, given by a string
+tower1.tif
+tower2.tif
+//  For each 1 entry in the correpondence matrix there is 
+// control point, and it corresponds the the same point in the
+// sister matrix
+//
+// This matrix is the set of points from image 3 that have corresponding 
+// points in image 0
+0 1 
+// 11 correspondences with 2 coordinates each (it's a matrix)
+6 2
+636 270
+626 299
+648 312
+432 365
+454 338
+411 318
+// This matrix is the set of points from image 0 that have corresponding 
+// points in image 3, it has a sister matrix given above (must be same size)
+1 0 
+6 2
+268 272
+258 300
+277 313
+58 362
+83 334
+36 312
+// this gives the image domain into which the others should be mapped.
+// I.e. the mosaic is from this point of view.
+2
+// This is the file name for the output.  Could be anything indicated 
+// by this string
+tower3.tif

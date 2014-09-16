@@ -1,0 +1,156 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+
+<HTML>
+<HEAD>
+<TITLE> PRATEEP'S ART GALLERY </TITLE>
+</HEAD>
+
+<BODY>
+
+<center> <h2> HOMEWORK 3 <br>
+			  PRATEEP MUKHERJEE <br> 
+			  prateepm@sci.utah.edu </h2> </center>
+
+<H2> IMAGE MOSAICING </H2>
+
+This report is organized as follows. First, we will discuss about how the image warping algorithm
+handles some very important details, like image contrast, feathering, computing the canvas size, and cascading.
+In the second section, we will discuss how the code structure is organized and how the code can be executed.
+Finally, we will provide the results on some image datasets.
+
+<H3> IMPLEMENTATION DETAILS </H3>
+
+<b> Contrast : </b> Image Contrast of the canvas is normalized to the range of the reference image. This normalization is performed
+on all channels, red, green and blue. The method for normalization is described next.
+<br>
+First, we compute the average individually of the three channels of the reference image. Now, for every image in our set excluding the 
+reference image, we adjust its intensity range such that the contrast-adjusted image now falls within the range of the reference image. 
+<br> <br>
+<b> Feathering : </b> Feathering is performed by weighing each pixel in the canvas with its distances to the enclosing images. 
+<br> <br> 
+<center> <img src="feather.png" height="340" alt="" /> <br>
+pixValue = (pixValue<sub>1</sub> * d1 + pixValue<sub>2</sub> * d2) / (d1 + d2)
+</center>
+
+<br> <br>	
+<b> Image Size : </b> The size of the canvas is computed for each image in the set to make sure the output canvas can precisely include
+all the images in the set. (x<sub>min</sub>, y<sub>min</sub>) and (x<sub>max</sub>, y<sub>max</sub>) are computed using back-projection of 
+every pixel on the canvas and check if it lies inside the domain of any image in the set.
+<br> <br>
+<b>  Cascading : </b> In my algorithm, I use a graph search algorithm to solve the cascading problem. The path-finding algorithm works like this:
+it starts with the current image and recurses from the current node until it reaches a frame to which it belongs. There is a parameter "levels", which
+makes sure that the path is not greater than the number of images in our set. This algorithm is implemented in <a href="fillTransformMatrixList.m"> fillTransformMatrixList.m </a>.
+<br> <br>		  
+
+<H3> CODE STRUCTURE </H3>
+
+<a href="test.m"> test.m: </a> The main file of the project. 
+<br> <b> Input : </b> The parameter file (e.g. params.txt)
+<br> <b> Output : </b> The mosaic image.
+<br> <b> Details : </b> This file is divided into three parts. In the first part, we parse the input parameter file to input the correspondence points(or landmarks) between pairs of images, and the relationship
+matrix. In the second part, we compute the corner points of the canvas, using the landmarks. Finally, we transform each pixel of every image onto the canvas using the previously computed transformations.
+
+<br> <br>
+
+<a href="fillTransformMatrixList.m"> fillTransformMatrixList.m </a> The path-finding algorithm to solve cascading.
+<br> <b> Input : </b> The list of transformation Matrices and the relationship matrix.
+<br> <b> Output : </b> The filled relationship matrix.
+<br> <b> Details : </b> The path from every image in the set to the reference image. At every step, we multiply the transformation matrices, so that the cumulative product gives us the transformation of every image 
+in the set to the reference image.
+
+<br> <br>
+
+<a href="getTransM.m"> getTransformM.m </a> The path-finding algorithm to solve cascading.
+<br> <b> Input : </b> The list of transformation Matrices and the relationship matrix.
+<br> <b> Output : </b> The final transformation matrix
+<br> <b> Details : </b> SVD decomposition gives us the parameters for the transformation.
+
+<br> <br>
+
+<a href="computeBounds.m"> computeBounds.m </a> Computes corners of the canvas.
+<br> <b> Input : </b> The reference image, set of all images, dimension of points, and the list of transformations.
+<br> <b> Output : </b> The minimum and maximum values in each dimension
+<br> <b> Details : </b> We compute the homogeneous coordinates for every transformation and compute the bounds from them.
+<br>
+<br> Auxillary functions <br>
+<a href="isValid.m"> isValid.m </a> Check if the co-ordinates fall inside the given bounds.
+
+
+<br> <br>
+To run the project, type : <br>
+>> test <br>
+>> % To change the parameter file change this line:<br>
+&nbsp; &nbsp; &nbsp; % fp = fopen(filename,'r');
+
+<H3> RESULTS </H3>
+
+The top row in each experiment shows the images in our set. The bottom row shows the resulting mosaic. 
+<br> <br>
+
+1) In the first experiment, we use the "planer" mosaic. (Parameter file: <a href="params.txt"> params.txt </a>) <br>
+
+<img src="w0.png" height="240" alt="" />
+<img src="w1.png" height="240" alt="" />
+<img src="w2c.png" height="240" alt="" />
+<img src="w3c.png" height="240" alt="" />
+<br>
+<center> <img src="mosaic_out.png" alt="" />  </center>
+
+<br> <br>
+2) In the second experiment, we use the "tower" example. (Parameter file: <a href="tower.txt"> tower.txt </a>) <br>
+
+<img src="tower1.png" height="480" alt="" />
+<img src="tower2.png" height="480" alt="" />
+<br>
+<center> <img src="tower3.png" alt="" />  </center>
+
+<br> <br>
+3) In the third experiment, we use the "sci" example. (Parameter file: <a href="sci.txt"> sci.txt </a>) <br>
+
+&nbsp; 
+<img src="sci1.jpg" height="240" alt="" /> &nbsp;
+<img src="sci2.jpg" height="240" alt="" /> &nbsp;
+<img src="sci3.jpg" height="240" alt="" />
+<br>
+<center> <img src="sci_mosaic.jpg" height="450" alt="" />  </center>
+<br> <br>
+Next, we reduced the number of landmarks to half. This resulted in the following mosaic. Note that, some details go missing,
+especially towards the left corner picture, due to lack of landmarked interest points. Also, the canvas dimensions were not entirely
+correct, as it cropped some parts of the images with no landmarks (see left-most corner of 1st image).
+
+<center> <img src="sci_mosaic_1.jpg" height="490" alt="" /> </center>
+
+<br> <br>
+4) In the third experiment, we use the "building" example. (Parameter file: <a href="building/building.txt"> building.txt </a>) <br>
+
+&nbsp; 
+<img src="building/building1.jpg" height="200" alt="" />
+<img src="building/building2.jpg" height="200" alt="" />
+<img src="building/building3.jpg" height="200" alt="" />
+<img src="building/building4.jpg" height="200" alt="" />
+<img src="building/building5.jpg" height="200" alt="" />
+<br>
+ 
+<center>
+<img src="building/building_mosaic.jpg" width="520" alt="" /> &nbsp; &nbsp; &nbsp; 
+<img src="building/building_mosaic_1.jpg" width="520" alt="" />
+</center> 
+
+<br><br>
+Next, we reduced the number of landmarks to the theoretical minimum value. This resulted in the mosaic on the right. Note that the mosaicing
+algorithm performs well in the positions of the landmarks, which were put at the base of the building and on the road.
+However, it completely ignores the rest of the canvas, which do not have significant amount of landmarks.
+
+
+
+<H3> SUMMARY </H3>
+
+In summary, number of location of landmark points does have a significant effect on image mosaicing. In every experiment, we chose around 
+7-8 manually annoted landmark points. Selection of more landmarks increases the quality of mosaicing. However, this also increases the running time
+of our algorithm. On average, our algorithm took ~ 30-45 seconds to run in MATLAB, depending on the size of the images. <br>
+Using the theoretical minimum number of control points, we get only the landmarked locations of the images warped, and a blury effect over the rest of the
+canvas(as seen in the 4<sup>th</sup> experiment)
+
+
+</BODY>
+</HTML>

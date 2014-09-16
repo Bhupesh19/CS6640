@@ -1,0 +1,281 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+
+<HTML>
+<HEAD>
+<TITLE> IMAGE PROCESSING </TITLE>
+</HEAD>
+
+<BODY >
+
+<center> 
+<h2> HOMEWORK 5 <br>
+	PRATEEP MUKHERJEE <br> 
+	prateepm@sci.utah.edu 
+</h2> 
+</center>
+
+<H3> CODE STRUCTURE </H3>
+
+<a href="test.m"> test.m: </a> The main file of the project. 
+<br> <b> Input : </b> The parameter settings and the input image.
+<br> <b> Output : </b> Displays and saves the outputs at each stage.
+<br> <b> Details : </b> The steps involved are: 1) preprocessing using non-linear filter; 2) generating edge map; 3) hysteresis thresholding; 4) hough line detection;
+and 5) hough circle detection.
+
+<br> <br>
+
+<a href="zeroCross.m"> zeroCross.m </a> Zero-crossing algorithm.
+<br> <b> Input : </b> The gradient image and threshold.
+<br> <b> Output : </b> Binary image showing the contour of the edges.
+<br> <b> Details : </b> The contours are decided by looking at a neighborhood(4 directions) around each pixel and contour is formed depending on the change 
+of gradient magnitude. 
+
+<br> <br>
+
+<a href="myHoughLines.m"> myHoughLines.m </a> Hough Transform for line detection
+<br> <b> Input : </b> Binary edge image, rho resolution, theta, threshold and number of peaks.
+<br> <b> Output : </b> Hough image and points on each line segment.
+<br> <b> Details : </b> We use the normal Hough transform to build the accumulator. Next, we find the peaks among all the bins of the Hough transform matrix. This 
+gives us the lines in the image. To build the line segments from the lines, we find gaps among the points on each line. Thresholding this gap gives us the 
+line segments. This idea is taken from MATLAB implementation of <a href="http://www.mathworks.com/help/images/ref/houghlines.html"> houghlines </a>.
+
+<br> <br>
+
+<a href="myHoughCircle.m"> myHoughCircle.m </a> Hough Transform for circle detection.
+<br> <b> Input : </b> Binary edge image, radius for circle detection, threshold, region of interest(optional)
+<br> <b> Output : </b> Hough image and points on the circles.
+<br> <b> Details : </b> We find points on the edge image and thereafter fit a circle of given radius to these points. 
+The points which fall on a circle of given radius increase the accumulator. First, we get the limits of the circle (left and right). Next, we traverse along this
+circle, with given radius, and accumulate edge points which lie on this circle. Then, we find the maximum peaks in the accumulator space and return (X,Y) coordinates from these peaks.
+<br> Traversing the circles in hough transform is adapted from <a href="http://www.mathworks.com/matlabcentral/fileexchange/9833-hough-transform-for-circle-detection"> here </a>.  
+<br> For drawing the circles on the original image, we sample points from the above set at different angles and the given radius. This idea is taken from 
+<a href="http://www.mathworks.com/matlabcentral/fileexchange/9168-detect-circles-with-various-radii-in-grayscale-image-via-hough-transform/content/DrawCircle.m"> here</a>.
+
+<br> <br>
+
+<a href="hysthresh.m"> hysthresh.m </a> Hysteresis thresholding of an edge image
+<br> <b> Input : </b> Binary image, lower and upper threshold
+<br> <b> Output : </b> Thresholded binary edge image
+<br> <b> Details : </b> Edge points above the upper threshold are included in the edge map. For edge points falling below the lower threshold, we do connected
+component analysis to join them to stronger edge points. Here, I have used the MATLAB in-built function <b> bwselect.m </b>. However, this could also have been done
+using flood-fill and connected components.
+
+<br> <br>
+
+<h4> Filters </h4> 
+Here, I have tried 3 different types of non-linear filters. <a href="bilfilt2.m"> bilateral filtering </a>, median filtering and 
+<a href="http://www.mathworks.com/matlabcentral/fileexchange/14995-anisotropic-diffusion-perona-malik"> anisotropic diffusion </a>. For majority of the experiments,
+bilateral and anisotropic worked well.
+
+
+<br> <br>
+To run the project, type : <br>
+>> test <br>
+% Change the image filename in line 1 to test with different images.
+
+<h1> RESULTS </h1>
+
+<h2> PREPROCESSING AND EDGE DETECTION </h2>
+1) Results on synthetic images. I built a white box in black background. In
+the figures below, I show the original image, filtered image using non-linear 
+filters and Laplacian of Gaussian and Canny edge maps.
+
+<br>
+
+<div style="margin: 0 auto; text-align: center; overflow: hidden;" >
+ <div style="float: left;">
+  <img src="results/synthetic/original.png" height="240" alt="" /> <br>
+  original Image
+ </div>
+ <div style="float: left;">
+   <img src="results/synthetic/filtered_iter2.png" height="240" alt=""/> <br> 
+   filtered Image using Bilateral filtering
+ </div>
+ <div style="float: left;">
+   <img src="results/synthetic/edgeImage_1_medFilt.png" height="240" alt="" /> <br>
+   edge Map (LOG)
+   </div>
+ <div style="float: left;">
+   <img src="results/synthetic/edgeImage_1.png" height="240" alt="" /> <br>
+   edge Map (CANNY)
+   </div>
+</div>
+<br> <br>
+
+2) Results on coins.png.
+
+<br>
+<div style="margin: 0 auto; text-align: center; overflow: hidden;" >
+ <div style="float: left;">
+  <img src="results/coins/original.png" height="240" alt="" /> <br>
+  original Image
+ </div>
+ <div style="float: left;">
+   <img src="results/coins/filtered_iter3.png" height="240" alt=""/> <br> 
+   filtered Image using Bilateral filtering
+ </div>
+ <div style="float: left;">
+   <img src="results/coins/edgeImage_log.png" height="240" alt="" /> <br>
+   edge Map (LOG)
+   </div>
+ <div style="float: left;">
+   <img src="results/coins/edgeImage_canny.png" height="240" alt="" /> <br>
+   edge Map (CANNY)
+   </div>
+</div>
+
+<br> <br>
+
+3) Results on real images 1. Here I use the Hysteresis thresholding with Canny edge detector. Hysteresis thresholding improves over the normal gradient based
+thresholding.
+
+<br>
+<div style="margin: 0 auto; text-align: center; overflow: hidden;" >
+ <div style="float: left;">
+  <img src="results/surface_mount/original.png" height="240" alt="" /> <br>
+  original Image
+ </div>
+ <div style="float: left;">
+   <img src="results/surface_mount/filtered.png" height="240" alt=""/> <br> 
+   filtered Image using Bilateral filtering
+ </div>
+ <div style="float: left;">
+   <img src="results/surface_mount/edgeImage.png" height="240" alt="" /> <br>
+   edge(CANNY without Hysteresis)
+   </div>
+ <div style="float: left;">
+   <img src="results/surface_mount/edgeImage_1.png" height="240" alt="" /> <br>
+   edge(CANNY with Hysteresis)
+   </div>
+</div>
+
+<br> <br>
+
+3) Results on real images 2
+
+<br>
+<div style="margin: 0 auto; text-align: center; overflow: hidden;" >
+ <div style="float: left;">
+  <img src="results/surface_mount_sm/original.png" height="240" alt="" /> <br>
+  original Image
+ </div>
+ <div style="float: left;">
+   <img src="results/surface_mount_sm/filtered.png" height="240" alt=""/> <br> 
+   filtered Image using Bilateral filtering
+ </div>
+ <div style="float: left;">
+   <img src="results/surface_mount_sm/edgeImage.png" height="240" alt="" /> <br>
+   edge(LOG) 
+   </div>
+ <div style="float: left;">
+   <img src="results/surface_mount_sm/edgeImage_1.png" height="240" alt="" /> <br>
+   edge(CANNY with Hysteresis)
+   </div>
+</div>
+
+<br> <br> 
+
+<br> <br> 
+<h2> LINE DETECTION </h2>
+
+1) Results on synthetic images.
+
+<br>
+<div style="margin: 0 auto; text-align: center; overflow: hidden;" >
+ <div style="float: left;">
+  <img src="results/original.png" height="240" alt="" /> <br>
+  original Image
+ </div>
+ <div style="float: left;">
+   <img src="results/edgeImage_1.png" height="240" alt="" /> <br>
+   edge(LOG) 
+   </div>
+ <div style="float: left;">
+   <img src="results/lines.png" height="240" alt="" /> <br>
+   Circles overlayed on original image
+   </div>
+  <div style="float: left;">
+   <img src="results/hough.png" height="240" alt="" /> <br>
+   Hough Transform
+   </div>
+</div>
+
+<br> <br>
+2) Results on real images.
+
+<div style="margin: 0 auto; text-align: center; overflow: hidden;" >
+ <div style="float: left;">
+  <img src="results/synthetic1/original.png" height="240" alt="" /> <br>
+  original Image
+ </div>
+ <div style="float: left;">
+   <img src="results/synthetic1/edgeImage_1.png" height="240" alt="" /> <br>
+   edge(LOG) 
+   </div>
+ <div style="float: left;">
+   <img src="results/synthetic1/lines.png" height="240" alt="" /> <br>
+   Circles overlayed on original image
+   </div>
+  <div style="float: left;">
+   <img src="results/synthetic1/houghLine.png" height="240" alt="" /> <br>
+   Hough Transform
+   </div>
+</div>
+
+<br> <br>
+
+<h2> CIRCLE DETECTION </h2>	  
+
+1) Results on real images 1
+
+<br>
+<div style="margin: 0 auto; text-align: center; overflow: hidden;" >
+ <div style="float: left;">
+  <img src="results/surface_mount/original.png" height="240" alt="" /> <br>
+  original Image
+ </div>
+ <div style="float: left;">
+   <img src="results/surface_mount/edgeImage.png" height="240" alt="" /> <br>
+   edge(LOG) 
+   </div>
+ <div style="float: left;">
+   <img src="results/surface_mount/circle.png" height="240" alt="" /> <br>
+   Circles overlayed on original image
+   </div>
+  <div style="float: left;">
+   <img src="results/surface_mount/hough.png" height="240" alt="" /> <br>
+   Hough Transform
+   </div>
+</div>
+
+<br><br>
+2) Results on real images 2. Some of the circles are not detected due to threshold value. If I increase the threshold values, number of false positives increases.
+
+<br> <br>
+<div style="margin: 0 auto; text-align: center; overflow: hidden;" >
+ <div style="float: left;">
+  <img src="results/surface_mount_sm/original.png" height="240" alt="" /> <br>
+  original Image
+ </div>
+ <div style="float: left;">
+   <img src="results/surface_mount_sm/edgeImage.png" height="240" alt="" /> <br>
+   edge(LOG) 
+   </div>
+ <div style="float: left;">
+   <img src="results/surface_mount_sm/circle.png" height="240" alt="" /> <br>
+   Circles overlayed on original image
+   </div>
+ <div style="float: left;">
+   <img src="results/surface_mount_sm/hough.png" height="240" alt="" /> <br>
+   Hough Transform 
+   </div>
+</div>
+
+<H2> SUMMARY </H2>
+Anisotropic diffusion was also tried and gave similar results to bilateral filtering.
+The Hough lines worked well on synthetic data as well as on real images, as seen in the 
+experiments. Hough circle detection was not quite as good and failed to detect ALL of the circles.
+This might be an issue of parameter tuning.
+
+</BODY>
+</HTML>

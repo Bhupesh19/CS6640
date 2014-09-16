@@ -1,0 +1,90 @@
+//  Upper half of this matrix gives correspondences that are available 
+// between different images -- 1 means that correspondences exist
+// This matrix is square with r/c equal to the number of images
+3 3
+0.0 1.0 0.0
+0.0 0.0 1.0
+0.0 0.0 0.0
+// For the number of images specified above 0..N-1, each one 
+// has a file name, given by a string
+sci1.jpg
+sci2.jpg
+sci3.jpg
+//  For each 1 entry in the correpondence matrix there is 
+// control point, and it corresponds the the same point in the
+// sister matrix
+//
+// This matrix is the set of points from image 3 that have corresponding 
+// points in image 0
+0 1 
+// 6 correspondences with 2 coordinates each (it's a matrix)
+5 2
+592 550
+//783 119
+849 105
+//871 56
+850 53
+//486 30
+786 105
+//302 31
+768 22
+//297 13
+// This matrix is the set of points from image 0 that have corresponding 
+// points in image 3, it has a sister matrix given above (must be same size)
+1 0 
+5 2
+459 473
+//631 117
+687 107
+//707 65
+690 63
+//379 33
+633 105
+//221 29
+620 34
+//217 13
+
+// 0 to 1 correspondences
+1 2
+7 2
+892 37
+//898 508
+892 504
+//888 481
+897 98
+//919 88
+902 478
+//848 42
+896 484
+//855 56
+871 45
+//896 94
+863 60
+//924 53
+
+
+// 1 to zero correspondences
+2 1
+7 2
+104 40
+//119 546
+113 541
+//108 518
+111 105
+//137 94
+124 514
+//53 44
+117 520
+//61 60
+80 48
+//110 101
+71 64
+//140 57
+
+
+// this gives the image domain into which the others should be mapped.
+// I.e. the mosaic is from this point of view.
+2
+// This is the file name for the output.  Could be anything indicated 
+// by this string
+sci_mosaic_1.jpg

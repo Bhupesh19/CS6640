@@ -1,0 +1,89 @@
+<!DOCTYPE html
+PUBLIC "-//W3D//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<head>
+<title> Prateep Mukherjee's homepage </title>
+</head>
+<body>
+
+
+<h2>  Build a Histogram </h2>
+
+<br> I experimented with two sets of images, turkeys, with light background and dark objects, and MRI brain, with dark background and white foreground. I also varied the number of histogram bins so as to observe its effects on the histogram. The images were thresholded over the entire spectrum, that is from 0 to 255.
+
+<br> 
+
+<img src="brain.png" height="242" alt=""/>
+<img src="hist1_brain_2.png" height="242"/>
+<img src="hist1_brain_1.png" height="242"/>
+<img src="hist1_brain_3.png" height="242"/>
+
+<br> <br>
+
+In the first image, we can observe that the probability of a pixel being white is greater than that being dark. Hence, we see a histogram shifted towards the lower values of the spectrum. 
+
+<br>
+
+<img src="turkeys.png" width="242" height="142" alt=""/>
+<img src="hist2_turkeys_2.png" height="242"/>
+<img src="hist2_turkeys_1.png" height="242"/>
+<img src="hist2_turkeys_3.png" height="242"/>
+
+
+<br> <br>
+In the second image, we observe that most of the pixels, those in the grass and house, have high intensity, while the turkeys and the fence contribute pixels having lower intensities. Therefore, the resulting histogram also has shifted towards the high intensity zone(from 100 - 200).
+
+
+<br/>  <br />
+
+<h2> Connected Component Analysis </h2>
+
+<br> In this application also, I experimented with two sets of images, having different background and foreground contrasts. I also experimented using different thresholds for binarization in the two images. 
+
+<br> 
+
+<img src="turkeys.png" height="150" alt="" />
+<img src="conncomp_turkeys_1.png" height="242" />
+<img src="conncomp_turkeys_2.png" height="242" />
+<img src="conncomp_turkeys_3.png" height="242" />
+
+<br /> In the turkeys example, an appropriate threshold from 0 to 100 yields the best possible connected components. If we use other sets of thresholds, the binary image contains greater noise and resulting connected components contain random artifacts. 
+
+<br />
+
+<img src="brain.png" height="242" vspace="10"/>
+<img src="conncomp_brain_1.png" height="242" />
+<img src="conncomp_brain_2.png" height="242" />
+<img src="conncomp_brain_3.png" height="242" />
+
+<br /> In the MRI brain image, similarly thresholding plays an important role in connected component analysis. A thresholdd from 50 to 100 yields better connected components than other ranges. The connected components in the above images are color-coded. 
+
+<br /> <br />
+
+<h2> Topological Denoising </h2>
+
+<br /> In this application, I have again experimented on two sets of images. In the first one, shown in the left picture below, three different shapes are shown. The second example, shown in the right picture below, is the turkeys example from previous applications. 
+
+<br />
+
+<img src="topDenoise_1.png" alt=""> 
+<img src="topDenoise_2.png" alt="">
+
+<br /> Notice that the original connected component analysis yields some degree of noise due to imperfect binarization of the original image. We can remove these spurious components based on the area of these components. Such a post-processing step yields much cleaner images, like those shown in the right. To yield better results than these, more advanced binarization algorithms are needed which generate perfect binary images at the outset. Another probable improvement is if we know properties of the connected components that the image contain, like aspect ratio, major/minor axis length etc. 
+
+<br /> <br />
+
+<h2> Motion Detection </h2>
+
+
+<br /> The steps in generating the third figure. First, the second image was subtracted from the first image and binarized. In the next step, connected component analysis was performed on this binary image in order to generate a label image. Finally, this label image was cleaned in order to generate the resulting image. 
+
+<br />
+
+<img src="houndog1.png" alt=""> 
+<img src="houndog2.png" alt=""> 
+<img src="motionDetect_1.png" alt="">
+
+<br /> The challenges in designing such a system is that the final connected component might not cover the whole object itself, due to inhomogenous lighting conditions and noise. 

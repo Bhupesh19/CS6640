@@ -1,0 +1,139 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+
+<HTML>
+<HEAD>
+<TITLE> IMAGE PROCESSING </TITLE>
+</HEAD>
+
+<BODY >
+
+<center> 
+<h2> HOMEWORK 4 <br>
+	PRATEEP MUKHERJEE <br> 
+	prateepm@sci.utah.edu 
+</h2> 
+</center>
+
+<H3> CODE STRUCTURE </H3>
+
+<a href="test.m"> test.m </a> Main script for the project
+<br> <b> Input : </b> At different stages of execution
+<br> <b> Output : </b> Images are displayed for each intermediate step
+<br> <b> Details : </b> Three main functionalities are : (a) phase correlation,
+(b) peak finding and visualization and (c) mosaic building.
+
+<br> <br>
+
+<a href="phasecorr.m"> phasecorr.m </a> Computes phase correlation between 2 images
+<br> <b> Input : </b> 2 input images, filter(optional) and peak threshold(optional)
+<br> <b> Output : </b> Phase correlated image, and index of peak
+<br> <b> Details : </b> We try 3 different types of filters: (1) Butterworth,
+(2) Gaussian, and (3) Ideal / Box filter. The rest is : convolving the filter with
+the power spectrum of the input images, shifting for FFT and inverse FFT. The maximum
+peak in many cases is just a point. Therefore, I threshold using the histogram and do connected
+component analysis for better visualization.
+
+<br> <br>
+
+<a href="buildMosaic.m"> buildMosaic.m </a> Mosaic construction given a list of images.
+<br> <b> Input : </b> Cell array of filenames involved and peak threshold.
+<br> <b> Output : </b> Required mosaic
+<br> <b> Details : </b> First, I build an adjacency matrix that denotes whether two images
+are overlapped. Also, the peak value indices denote the shifts(only translation) between the images.
+I place the first image on canvas. Then I loop across all the other images, for each of them I find an
+image, already placed on canvas. If no such image is found, I discard the current image. If such an image
+is found, then the current image is translated onto the canvas and the local offsets are recomputed.
+<br> <br>
+
+<h1> RESULT </h1>
+
+<h2> Phase Correlation </h2>
+1) First I experiment on two sample images from <a href="http://en.wikipedia.org/wiki/File:Phase_correlation.png">
+here</a>. Results are as follows:
+
+<div style="margin: 0 auto; text-align: center; overflow: hidden;" >
+ <div style="float: left;">
+  <img src="t1.png" height="240" alt="" /> <br>
+  original Image(I)
+ </div>
+ <div style="float: left;">
+   <img src="t2.png" height="240" alt=""/> <br> 
+  original Image(J)
+ </div>
+ <div style="float: left;">
+   <img src="phase.png" height="240" alt="" /> <br>
+   phase image(butterworth, order = 1)
+   </div>
+ <div style="float: left;">
+   <img src="binary.png" height="240" alt="" /> <br>
+   binary threshold image
+   </div>
+</div>
+ <div style="float: center;">
+   <img src="conncomp.png" height="240" alt="" /> <br>
+   connected component labeled image
+ </div>
+</div>
+<br> 
+
+2) Second, I experimented on one pair of cell images
+<div style="margin: 0 auto; text-align: center; overflow: hidden;" >
+ <div style="float: left;">
+  <img src="0001.000.png" height="240" alt="" /> <br>
+  original Image(I)
+ </div>
+ <div style="float: left;">
+   <img src="0001.005.png" height="240" alt=""/> <br> 
+  original Image(J)
+ </div>
+ <div style="float: left;">
+   <img src="phase1.png" height="240" alt="" /> <br>
+   phase image(butterworth, order = 1)
+   </div>
+ <div style="float: left;">
+   <img src="binary1.png" height="240" alt="" /> <br>
+   binary threshold image
+   </div>
+</div>
+ <div style="float: center;">
+   <img src="conncomp1.png" height="240" alt="" /> <br>
+   connected component labeled image
+   </div>
+</div>
+<br> <br>
+
+
+<h1> MOSAIC CONSTRUCTION </h1>
+Here, I experimented on the cell images given. Each of them used butterworth filter as low pass filter.
+	
+<div style="margin: 0 auto; text-align: center; overflow: hidden;" >
+ <div style="float: left;">
+  <img src="0001.000.png" height="240" alt="" /> <br>
+  original Image 1
+ </div>
+ <div style="float: left;">
+   <img src="0001.001.png" height="240" alt=""/> <br> 
+ original Image 2
+ </div>
+ <div style="float: left;">
+   <img src="0001.002.png" height="240" alt="" /> <br>
+   original Image 3
+   </div>
+ <div style="float: left;">
+   <img src="0001.004.png" height="240" alt="" /> <br>
+  original Image 4
+   </div>
+</div>
+ <div style="float: center;">
+   <img src="mosaic.png" height="240" alt="" /> <br>
+  mosaic Image
+   </div>
+</div>
+
+<h1> SUMMARY </h1>
+
+The butterworth filters proved most effective in low pass transform. In the mosaic building, I chose order of butterworth n = 2. Higher orders let a very difficult
+choice of peak thresholds.
+
+</BODY>
+</HTML>

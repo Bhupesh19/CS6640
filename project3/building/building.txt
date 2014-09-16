@@ -1,0 +1,141 @@
+//  Upper half of this matrix gives correspondences that are available 
+// between different images -- 1 means that correspondences exist
+// This matrix is square with r/c equal to the number of images
+5 5
+0.0 1.0 0.0 1.0 0.0
+0.0 0.0 1.0 0.0 1.0
+0.0 0.0 0.0 0.0 0.0
+0.0 0.0 0.0 0.0 0.0
+0.0 0.0 0.0 0.0 0.0
+// For the number of images specified above 0..N-1, each one 
+// has a file name, given by a string
+building1.jpg
+building2.jpg
+building3.jpg
+building4.jpg
+building5.jpg
+//  For each 1 entry in the correpondence matrix there is 
+// control point, and it corresponds the the same point in the
+// sister matrix
+//
+// This matrix is the set of points from image 3 that have corresponding 
+// points in image 0
+0 1 
+// 6 correspondences with 2 coordinates each (it's a matrix)
+8 2
+83 149
+247 188
+91 141
+131 222
+121 206
+100 133
+198 157
+15 152
+
+// This matrix is the set of points from image 0 that have corresponding 
+// points in image 3, it has a sister matrix given above (must be same size)
+1 0 
+8 2
+83 31
+248 70
+90 23
+132 103
+122 87
+99 15
+199 38
+20 64
+
+// 0 to 1 correspondences
+1 2
+12 2
+184 132
+33 146
+19 143
+59 195
+231 161
+181 144
+197 139
+238 135
+19 138
+194 139
+10 115
+15 112
+
+// 1 to zero correspondences
+2 1
+12 2
+186 32
+32 49
+18 47
+61 97
+232 61
+182 44
+195 39
+240 35
+18 42
+195 39
+7 18
+11 15
+
+// 1 to 4 correspondences
+0 3
+13  2
+103 129
+65 125
+83 149
+70 176
+73 135
+62 85
+62 79
+131 222
+131 206
+131 201
+100 133
+95 211
+100 139
+
+// 4 to 1 correspondences
+3 0
+13 2
+275 86
+238 70
+250 99
+229 119
+244 82
+246 30
+247 24
+274 187
+269 167
+281 166
+271 89
+243 162
+269 94
+
+// 2 to 5 correspondences
+1 4
+7 2
+259 19
+231 161
+221 47
+206 42
+253 144
+218 30
+218 27
+
+// 5 to 2 correspondences
+4 1
+7 2
+67 79
+81 222
+39 115
+23 115
+96 198
+30 100
+30 97
+
+// this gives the image domain into which the others should be mapped.
+// I.e. the mosaic is from this point of view.
+3
+// This is the file name for the output.  Could be anything indicated 
+// by this string
+building_mosaic.jpg
